@@ -13,7 +13,7 @@ import torch
 
 from .utils import DINOV3_BASE_URL
 
-
+# 预训练权重类型
 class Weights(Enum):
     LVD1689M = "LVD1689M"
     SAT493M = "SAT493M"
@@ -123,7 +123,9 @@ def _make_dinov3_vit(
         mask_k_bias=mask_k_bias,
     )
     vit_kwargs.update(**kwargs)
+    # 1.创建模型
     model = DinoVisionTransformer(**vit_kwargs)
+    # 2.加载预训练权重
     if pretrained:
         if type(weights) is Weights and weights not in {Weights.LVD1689M, Weights.SAT493M}:
             raise ValueError(f"Unsupported weights for the backbone: {weights}")
@@ -276,6 +278,7 @@ def dinov3_vits16plus(
     )
 
 
+# vitb 16 对应配置
 def dinov3_vitb16(
     *,
     pretrained: bool = True,
